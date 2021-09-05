@@ -1,0 +1,40 @@
+DATA SEGMENT
+    X DW -40
+    Y DW 50
+    SUM DW 0
+    NUM DW 0
+DATA ENDS
+CODE SEGMENT
+    ASSUME CS:CODE,DS:DATA
+START:
+    MOV AX,DATA
+    MOV DS,AX
+    MOV AX,X
+P1:
+    XOR BX,BX
+    ADD BX,AX
+    MOV AX,Y
+P2:
+    ADD BX,AX
+    MOV SUM,BX
+    MOV AX,SUM
+L1:
+    XOR DX,DX
+    MOV CX,10
+    IDIV CX
+    PUSH DX
+    INC NUM
+    CMP AX,0
+    JNE L1
+L2:
+    POP DX
+    ADD DX,30H
+    DEC NUM
+    CMP NUM,0
+    MOV AH,02H
+    INT 21H
+    JNE L2
+    MOV AH,4CH
+    INT 21H
+CODE ENDS
+END START
